@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "7QP+eXkWzJKTirDMaLDHFSTaYUPUNxgETgEeILAuFhzSGwi+k0Xrvl7mqnV3KAVn4Qyqkmh44aR5AeFEZMzRng==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\resse\\OneDrive\\Documentos\\CSharp\\Gato-4enLinea\\Gato-4enLinea.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\resse\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,14 @@
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\bin\Debug\netcoreapp3.1\Gato-4enLinea.exe
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\bin\Debug\netcoreapp3.1\Gato-4enLinea.deps.json
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\bin\Debug\netcoreapp3.1\Gato-4enLinea.runtimeconfig.json
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\bin\Debug\netcoreapp3.1\Gato-4enLinea.runtimeconfig.dev.json
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\bin\Debug\netcoreapp3.1\Gato-4enLinea.dll
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\bin\Debug\netcoreapp3.1\Gato-4enLinea.pdb
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.csproj.AssemblyReference.cache
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.AssemblyInfoInputs.cache
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.AssemblyInfo.cs
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.csproj.CoreCompileInputs.cache
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.dll
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.pdb
+C:\Users\resse\OneDrive\Documentos\CSharp\Gato-4enLinea\obj\Debug\netcoreapp3.1\Gato-4enLinea.genruntimeconfig.cache
