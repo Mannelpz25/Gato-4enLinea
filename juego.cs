@@ -22,6 +22,8 @@ namespace juego{
         public void colocarFicha(Jugador jugador)
         {
             Console.WriteLine("Jugador: {0}", jugador.getNombre());
+            //todo: tablero interactivo
+
         }
         public void imprimirTablero()
         {
