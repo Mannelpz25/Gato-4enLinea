@@ -16,7 +16,7 @@ namespace jugador{
             this.nombre = nombre;            
             this.ficha = new Ficha(figura, color);
         }
-        public Ficha colocarFicha()
+        public Ficha getFicha()
         {
             return this.ficha;
         }

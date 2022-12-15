@@ -18,6 +18,11 @@ namespace ficha{
             this.figura = figura;
             this.color = color;
         }
+
+        public char getFigura()
+        {
+            return this.figura;
+        }
         public void colocar()
         {
             Console.ForegroundColor = this.color;
