@@ -23,6 +23,10 @@ namespace ficha{
         {
             return this.figura;
         }
+        public ConsoleColor getColor()
+        {
+            return this.color;
+        }
         public void colocar()
         {
             Console.ForegroundColor = this.color;

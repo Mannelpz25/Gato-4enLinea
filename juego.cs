@@ -4,7 +4,7 @@
 */
 //-Importaciones:
 using System;
-using ficha;
+using System.Linq;
 using tablero;
 using jugador;
 //-Contenido:
@@ -37,6 +37,122 @@ namespace juego{
         {
             return this.jugador2;
         }
+        public void verificarGanador(int numFichas){
+            Tablero tablero = this.getTablero();
+            //Verificar horizontal
+            for(int i = 0; i < tablero.getCasillas().GetLength(0); i++){
+                for(int j = 0; j < tablero.getCasillas().GetLength(1); j++){
+                    if(tablero.getFicha(i, j) != null){                        
+                        if(j + numFichas <= tablero.getCasillas().GetLength(1)){
+                            int contador = 0;
+                            for(int k = j; k < j + numFichas; k++){
+                                if(tablero.getFicha(i, j) == tablero.getFicha(i, k)){
+                                    contador++;
+                                }
+                            }
+                            if(contador == numFichas){
+                                Console.Clear();
+                                switch(tablero.getFicha(i, j).getFigura()){
+                                    case 'X':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador1().getNombre());
+                                        break;
+                                    case 'O':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador2().getNombre());
+                                        break;
+                                }
+                                this.getTablero().imprimirTablero();
+                                Console.WriteLine("Fin del juego....");
+                                Console.ReadKey();
+                                Environment.Exit(0);
+                            }
+                        }
+                    }
+                }
+            }
+            //Verificar vertical
+            for(int i = 0; i < tablero.getCasillas().GetLength(0); i++){
+                for(int j = 0; j < tablero.getCasillas().GetLength(1); j++){
+                    if(tablero.getFicha(i, j) != null){                        
+                        if(i + numFichas <= tablero.getCasillas().GetLength(0)){
+                            int contador = 0;
+                            for(int k = i; k < i + numFichas; k++){
+                                if(tablero.getFicha(i, j) == tablero.getFicha(k, j)){
+                                    contador++;
+                                }
+                            }
+                            if(contador == numFichas){
+                                Console.Clear();
+                                switch(tablero.getFicha(i, j).getFigura()){
+                                    case 'X':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador1().getNombre());
+                                        break;
+                                    case 'O':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador2().getNombre());
+                                        break;
+                                }
+                                this.getTablero().imprimirTablero();
+                                Console.WriteLine("Fin del juego....");
+                                Console.ReadKey();
+                                Environment.Exit(0);
+                            }
+                        }
+                    }
+                }
+            }
+            //Verificar diagonal
+            for(int i = 0; i < tablero.getCasillas().GetLength(0); i++){
+                for(int j = 0; j < tablero.getCasillas().GetLength(1); j++){
+                    if(tablero.getFicha(i, j) != null){    
+                        if(i + numFichas <= tablero.getCasillas().GetLength(0) && j + numFichas <= tablero.getCasillas().GetLength(1)){
+                            int contador = 0;
+                            for(int k = 0; k < numFichas; k++){
+                                if(tablero.getFicha(i, j) == tablero.getFicha(i + k, j + k)){
+                                    contador++;
+                                }
+                            }
+                            if(contador == numFichas){
+                                Console.Clear();
+                                switch(tablero.getFicha(i, j).getFigura()){
+                                    case 'X':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador1().getNombre());
+                                        break;
+                                    case 'O':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador2().getNombre());
+                                        break;
+                                }
+                                this.getTablero().imprimirTablero();
+                                Console.WriteLine("Fin del juego....");
+                                Console.ReadKey();
+                                Environment.Exit(0);
+                            }
+                        }
+                        if((i + numFichas) <= tablero.getCasillas().GetLength(0) && (j - numFichas + 1) >= 0){
+                            int contador = 0;
+                            for(int k = 0; k < numFichas; k++){
+                                if(tablero.getFicha(i, j) == tablero.getFicha(i + k, j - k)){       
+                                    contador++;
+                                }
+                            }
+                            if(contador == numFichas){
+                                Console.Clear();
+                                switch(tablero.getFicha(i, j).getFigura()){
+                                    case 'X':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador1().getNombre());
+                                        break;
+                                    case 'O':
+                                        Console.WriteLine("Ganador: {0}\n", this.getJugador2().getNombre());
+                                        break;
+                                }
+                                this.getTablero().imprimirTablero();
+                                Console.WriteLine("Fin del juego....");
+                                Console.ReadKey();
+                                Environment.Exit(0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     public class Gato:Juego
     {
@@ -44,87 +160,16 @@ namespace juego{
         {
             
         }
-        public void verificarGanador(){
-            Tablero tablero = this.getTablero();
-            for(int i = 0; i < tablero.getCasillas().GetLength(0); i++){
-                if (tablero.getFicha(i, 0) != null
-                    && tablero.getFicha(i, 0) == tablero.getFicha(i, 1)
-                    && tablero.getFicha(i, 1) == tablero.getFicha(i, 2))
-                {
-                    switch(tablero.getFicha(i, 0).getFigura()){
-                        case 'X':
-                            Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                            break;
-                        case 'O':
-                            Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                            break;
-                    }
-                    Environment.Exit(0);
-                }
-            }
-            for(int i = 0; i < tablero.getCasillas().GetLength(1); i++){
-                if (tablero.getFicha(0, i) != null
-                    && tablero.getFicha(0, i) == tablero.getFicha(1, i)
-                    && tablero.getFicha(1, i) == tablero.getFicha(2, i))
-                {
-                    switch(tablero.getFicha(0, i).getFigura()){
-                        case 'X':
-                            Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                            break;
-                        case 'O':
-                            Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                            break;
-                    }
-                    Environment.Exit(0);
-                }
-            }
-            if (tablero.getFicha(0, 0) != null
-                && tablero.getFicha(0, 0) == tablero.getFicha(1,1)
-                && tablero.getFicha(1, 1) == tablero.getFicha(2,2))
-            {
-                switch(tablero.getFicha(0, 0).getFigura()){
-                    case 'X':
-                        Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                        break;
-                    case 'O':
-                        Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                        break;
-                }
-                Environment.Exit(0);
-            }
-            if (tablero.getFicha(0, 2) != null
-                && tablero.getFicha(0, 2) == tablero.getFicha(1,1)
-                && tablero.getFicha(1, 1) == tablero.getFicha(2,0))
-            {
-                switch(tablero.getFicha(0, 2).getFigura()){
-                    case 'X':
-                        Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                        break;
-                    case 'O':
-                        Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                        break;
-                }
-                Environment.Exit(0);
-            }         
-        }
-        public void jugarTurno(Jugador jugador){            
+        
+        public void seleccionarColumna(Jugador jugador){            
             ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
             int ejeX = -1; // Variable para almacenar la posicion en X
-            int ejeY = -1; // Variable para almacenar la posicion en Y
-            verificarGanador();
-            int[,] posicionesValidas = this.getTablero().posicionesValidas();
-            for(int x = 0; x < posicionesValidas.GetLength(1); x++){
-                for(int y = 0; y < posicionesValidas.GetLength(0); y++){
-                    if(posicionesValidas[x,y] == 1){
-                        ejeX = x;
-                        ejeY = y;
-                        break;
-                    }
-                }               
-                if(ejeX != -1 && ejeY != -1)
-                    break;
-            }
-            if(ejeX == -1 || ejeY == -1){
+            verificarGanador(3);
+            int[] posicionesValidas = this.getTablero().posicionesValidas();
+            if(posicionesValidas.Sum() == 0 ){
+                Console.Clear();
+                Console.WriteLine("Empate\n");
+                this.getTablero().imprimirTablero();
                 Console.WriteLine("Fin del juego....");
                 Console.ReadKey();
                 return;
@@ -136,52 +181,111 @@ namespace juego{
                 Console.WriteLine("Jugador: {0}", jugador.getNombre());
                 Console.ForegroundColor = ConsoleColor.DarkCyan; // Cambia el color del texto
                 Console.WriteLine("Utilize las flechas para moverse y pulse Enter para seleccionar... \n");
-                this.getTablero().imprimirTablero(jugador.getFicha(), ejeX, ejeY);
+                if(ejeX == -1){
+                    for(int x = 0; x < posicionesValidas.Length; x++){
+                        if(posicionesValidas[x] == 1){
+                            Console.ForegroundColor = jugador.getFicha().getColor();
+                            Console.Write("  ▼\n");
+                            ejeX = x;
+                            break;
+                        }else{
+                            Console.Write("    ");
+                        }
+                    }
+                }else{
+                    for(int x = 0; x < posicionesValidas.Length; x++){                        
+                        if(x == ejeX){
+                            Console.ForegroundColor = jugador.getFicha().getColor();
+                            Console.Write("  ▼\n");  
+                            break;
+                        }else{
+                            Console.Write("    ");
+                        }  
+                    }
+                }
+                this.getTablero().imprimirTablero();
                 key = Console.ReadKey().Key;     
                 // Se evalua si que flecha se presiono
                 if(key == ConsoleKey.LeftArrow){
-                    if(ejeY > 0){
-                        for(int y = ejeY-1; y >= 0; y--){
-                            if(posicionesValidas[ejeX,y] == 1){
-                                ejeY = y;
+                    if(ejeX > 0){
+                        for(int x = ejeX-1; x >= 0; x--){
+                            if(posicionesValidas[x] == 1){
+                                ejeX = x;
                                 break;
                             }
                         }
                                                 
                     }                    
                 } else if(key == ConsoleKey.RightArrow){
-                    if(ejeY < posicionesValidas.GetLength(0)-1){
-                        for(int y = ejeY+1; y < posicionesValidas.GetLength(0); y++){
-                            if(posicionesValidas[ejeX,y] == 1){
+                    if(ejeX < posicionesValidas.Length){
+                        for(int x = ejeX+1; x < posicionesValidas.Length; x++){
+                            if(posicionesValidas[x] == 1){
+                                ejeX = x;
+                                break;
+                            }
+                        }
+                    } 
+                } 
+            }while(key != ConsoleKey.Enter);
+            Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto 
+            seleccionarFila(ejeX, jugador);
+        }        
+
+        public void seleccionarFila(int ejeX, Jugador jugador){
+            ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
+            int ejeY = -1; // Variable para almacenar la posicion en X
+            int[] posicionesValidas = this.getTablero().posicionesValidas(ejeX);
+            do{
+                key = 0;
+                Console.Clear(); // Limpia la consola
+                Console.ForegroundColor = ConsoleColor.DarkYellow; // Cambia el color del texto
+                Console.WriteLine("Jugador: {0}", jugador.getNombre());
+                Console.ForegroundColor = ConsoleColor.DarkCyan; // Cambia el color del texto
+                Console.WriteLine("Utilize las flechas para moverse y pulse Enter para seleccionar... \n"); 
+                for(int x = 0; x <= ejeX; x++){
+                    if(ejeX==x){                         
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write("  ▼\n");
+                        break;
+                    }else{
+                        Console.Write("    ");
+                    }
+                }              
+                if(ejeY == -1){
+                    for(int y = 0; y < posicionesValidas.Length; y++){
+                        if(posicionesValidas[y] == 1){                            
+                            ejeY = y;
+                            break;
+                        }
+                    }
+                }  
+                this.getTablero().imprimirTablero(jugador.getFicha(), ejeY);
+                key = Console.ReadKey().Key;     
+                // Se evalua si que flecha se presiono
+                if(key == ConsoleKey.UpArrow){
+                    if(ejeY > 0){
+                        for(int y = ejeY-1; y >= 0; y--){
+                            if(posicionesValidas[y] == 1){
                                 ejeY = y;
                                 break;
                             }
                         }
+                                                
                     }                    
-                } else if (key == ConsoleKey.UpArrow){
-                    if(ejeX > 0){
-                        for(int x = ejeX-1; x >= 0; x--){
-                            if(posicionesValidas[x,ejeY] == 1){
-                                ejeX = x;
+                } else if(key == ConsoleKey.DownArrow){
+                    if(ejeY < posicionesValidas.Length){
+                        for(int y = ejeY+1; y < posicionesValidas.Length; y++){
+                            if(posicionesValidas[y] == 1){
+                                ejeY = y;
                                 break;
                             }
                         }
-                    }
-                } else if (key == ConsoleKey.DownArrow){
-                    if(ejeX < posicionesValidas.GetLength(1)-1){
-                        for(int x = ejeX+1; x < posicionesValidas.GetLength(1); x++){
-                            if(posicionesValidas[x,ejeY] == 1){
-                                ejeX = x;
-                                break;
-                            }
-                        }
-                    }
-                } else if (key == ConsoleKey.Enter){
-                    this.getTablero().setFicha(jugador.getFicha(),ejeX,ejeY);
+                    } 
                 } 
             }while(key != ConsoleKey.Enter);
+            this.getTablero().setFicha(jugador.getFicha() ,ejeY, ejeX);
             Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto 
-        }        
+        }
     }
 
     public class CuatroEnLinea:Juego
@@ -190,143 +294,85 @@ namespace juego{
         {
             
         }
-
-        public void verificarGanador(){
-            Tablero tablero = this.getTablero();
-            for(int i = 0; i < tablero.getCasillas().GetLength(0); i++){
-                if (tablero.getFicha(i, 0) != null
-                    && tablero.getFicha(i, 0) == tablero.getFicha(i, 1)
-                    && tablero.getFicha(i, 1) == tablero.getFicha(i, 2))
-                {
-                    switch(tablero.getFicha(i, 0).getFigura()){
-                        case 'X':
-                            Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                            break;
-                        case 'O':
-                            Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                            break;
-                    }
-                    Environment.Exit(0);
-                }
-            }
-            for(int i = 0; i < tablero.getCasillas().GetLength(1); i++){
-                if (tablero.getFicha(0, i) != null
-                    && tablero.getFicha(0, i) == tablero.getFicha(1, i)
-                    && tablero.getFicha(1, i) == tablero.getFicha(2, i))
-                {
-                    switch(tablero.getFicha(0, i).getFigura()){
-                        case 'X':
-                            Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                            break;
-                        case 'O':
-                            Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                            break;
-                    }
-                    Environment.Exit(0);
-                }
-            }
-            if (tablero.getFicha(0, 0) != null
-                && tablero.getFicha(0, 0) == tablero.getFicha(1,1)
-                && tablero.getFicha(1, 1) == tablero.getFicha(2,2))
-            {
-                switch(tablero.getFicha(0, 0).getFigura()){
-                    case 'X':
-                        Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                        break;
-                    case 'O':
-                        Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                        break;
-                }
-                Environment.Exit(0);
-            }
-            if (tablero.getFicha(0, 2) != null
-                && tablero.getFicha(0, 2) == tablero.getFicha(1,1)
-                && tablero.getFicha(1, 1) == tablero.getFicha(2,0))
-            {
-                switch(tablero.getFicha(0, 2).getFigura()){
-                    case 'X':
-                        Console.WriteLine("Ganador: {0}", this.getJugador1().getNombre());
-                        break;
-                    case 'O':
-                        Console.WriteLine("Ganador: {0}", this.getJugador2().getNombre());
-                        break;
-                }
-                Environment.Exit(0);
-            }         
-        }
-        public void jugarTurno(Jugador jugador){            
+        
+        public void seleccionarColumna(Jugador jugador){            
             ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
             int ejeX = -1; // Variable para almacenar la posicion en X
-            int ejeY = -1; // Variable para almacenar la posicion en Y
-            int[,] posicionesValidas = this.getTablero().posicionesValidas();
-            for(int x = 0; x < posicionesValidas.GetLength(1); x++){
-                for(int y = 0; y < posicionesValidas.GetLength(0); y++){
-                    if(posicionesValidas[x,y] == 1){
-                        ejeX = x;
-                        ejeY = y;
-                        break;
-                    }
-                }               
-                if(ejeX != -1 && ejeY != -1)
-                    break;
-            }
-            if(ejeX == -1 || ejeY == -1){
+            verificarGanador(4);
+            int[] posicionesValidas = this.getTablero().posicionesValidas();
+            if(posicionesValidas.Sum() == 0 ){
+                Console.Clear();
+                Console.WriteLine("Empate\n");
+                this.getTablero().imprimirTablero();
                 Console.WriteLine("Fin del juego....");
                 Console.ReadKey();
                 return;
             }
             do{
+                key = 0;
                 Console.Clear(); // Limpia la consola
                 Console.ForegroundColor = ConsoleColor.DarkYellow; // Cambia el color del texto
                 Console.WriteLine("Jugador: {0}", jugador.getNombre());
                 Console.ForegroundColor = ConsoleColor.DarkCyan; // Cambia el color del texto
                 Console.WriteLine("Utilize las flechas para moverse y pulse Enter para seleccionar... \n");
-                this.getTablero().imprimirTablero(jugador.getFicha(), ejeX, ejeY);
-                key = Console.ReadKey().Key;
-
+                if(ejeX == -1){
+                    for(int x = 0; x < posicionesValidas.Length; x++){
+                        if(posicionesValidas[x] == 1){
+                            Console.ForegroundColor = jugador.getFicha().getColor();
+                            Console.Write("  ▼\n");
+                            ejeX = x;
+                            break;
+                        }else{
+                            Console.Write("    ");
+                        }
+                    }
+                }else{
+                    for(int x = 0; x < posicionesValidas.Length; x++){                        
+                        if(x == ejeX){
+                            Console.ForegroundColor = jugador.getFicha().getColor();
+                            Console.Write("  ▼\n");  
+                            break;
+                        }else{
+                            Console.Write("    ");
+                        }  
+                    }
+                }
+                this.getTablero().imprimirTablero();
+                key = Console.ReadKey().Key;     
                 // Se evalua si que flecha se presiono
                 if(key == ConsoleKey.LeftArrow){
-                    if(ejeY > 0){
-                        for(int y = ejeY-1; y >= 0; y--){
-                            if(posicionesValidas[ejeX,y] == 1){
-                                ejeY = y;
-                                break;
-                            }
-                        }
-                    }                    
-                } else if(key == ConsoleKey.RightArrow){
-                    if(ejeY < posicionesValidas.GetLength(0)-1){
-                        for(int y = ejeY+1; y < posicionesValidas.GetLength(0); y++){
-                            if(posicionesValidas[ejeX,y] == 1){
-                                ejeY = y;
-                                break;
-                            }
-                        }
-                    }                    
-                } else if (key == ConsoleKey.UpArrow){
                     if(ejeX > 0){
                         for(int x = ejeX-1; x >= 0; x--){
-                            if(posicionesValidas[x,ejeY] == 1){
+                            if(posicionesValidas[x] == 1){
                                 ejeX = x;
                                 break;
                             }
                         }
-                    }
-                } else if (key == ConsoleKey.DownArrow){
-                    if(ejeX < posicionesValidas.GetLength(1)-1){
-                        for(int x = ejeX+1; x < posicionesValidas.GetLength(1); x++){
-                            if(posicionesValidas[x,ejeY] == 1){
+                                                
+                    }                    
+                } else if(key == ConsoleKey.RightArrow){
+                    if(ejeX < posicionesValidas.Length){
+                        for(int x = ejeX+1; x < posicionesValidas.Length; x++){
+                            if(posicionesValidas[x] == 1){
                                 ejeX = x;
                                 break;
                             }
                         }
-                    }
-                } else if (key == ConsoleKey.Enter){
-                    this.getTablero().setFicha(jugador.getFicha(),ejeX,ejeY);
+                    } 
                 } 
             }while(key != ConsoleKey.Enter);
             Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto 
-        }        
+            dejarCaerFicha(ejeX, jugador);
+        }     
+        public void dejarCaerFicha(int ejeX, Jugador jugador){
+            for(int y = this.getTablero().getCasillas().GetLength(0)-1; y >= 0; y--){
+                if(this.getTablero().getFicha(y, ejeX) == null){
+                    this.getTablero().setFicha(jugador.getFicha(), y, ejeX);
+                    break;
+                }
+            }
+        }
+        
     }    
    
 }

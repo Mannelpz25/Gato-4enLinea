@@ -6,7 +6,6 @@
 //-Importaciones:
 using System;
 using ficha;
-using jugador;
 
 //-Contenido:
 
@@ -27,8 +26,6 @@ namespace tablero
             return this.casillas[ejeX,ejeY];
         }
 
-
-
         public int getLength(){
             return this.casillas.Length;
         }  
@@ -36,7 +33,7 @@ namespace tablero
         {
             this.casillas[ejeX,ejeY] = ficha;
         }
-        public void imprimirTablero(Ficha newFicha, int ejeX, int ejeY)
+        public void imprimirTablero(Ficha newFicha, int ejeY)
         {
             for (int j = 0; j < this.casillas.GetLength(1); j++)
             {
@@ -53,16 +50,9 @@ namespace tablero
                     Console.Write("| ");
 
                     if(casillas[i,j] == null)
-                    {
-                        if(i == ejeX  && j == ejeY)
-                        {
-                            newFicha.colocar();
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-                            Console.Write(" ");
-                        }
+                    {                        
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(" ");                        
                     }
                     else
                     {
@@ -72,7 +62,14 @@ namespace tablero
                     Console.Write(" ");
 
                 }
-                Console.Write("|\n");
+                Console.Write("|");
+                if(i == ejeY)
+                {
+                    Console.ForegroundColor = newFicha.getColor();
+                    Console.Write(" ◄\n");
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }else
+                    Console.Write("\n");
                 for (int j = 0; j < this.casillas.GetLength(1); j++)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -90,10 +87,10 @@ namespace tablero
                 Console.Write("----");
             }
             Console.Write("-\n");
-            for (int i = 0; i < this.casillas.GetLength(1); i++)
+            for (int i = 0; i < this.casillas.GetLength(0); i++)
             {
                 
-                for (int j = 0; j < this.casillas.GetLength(0); j++)
+                for (int j = 0; j < this.casillas.GetLength(1); j++)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write("| ");
@@ -122,24 +119,38 @@ namespace tablero
             }
         }
 
-        public int[,] posicionesValidas()
+        public int[] posicionesValidas()
         {
-            int[,] posiciones = new int[casillas.GetLength(0), casillas.GetLength(1)];
+            int[] posicionesX = new int[casillas.GetLength(1)];
             for (int x = 0; x < casillas.GetLength(1); x++)
             {
+                posicionesX[x] = 0;
                 for (int y = 0; y < casillas.GetLength(0); y++)
                 {
-                    if(casillas[x,y] == null)
+                    if(casillas[y,x] == null)
                     {
-                        posiciones[x,y] = 1;
-                    }
-                    else
-                    {
-                        posiciones[x,y] = 0;
+                        posicionesX[x] = 1;
+                        break;
                     }
                 }
             }
-            return posiciones;
+            return posicionesX;                
+        }
+        public int[] posicionesValidas(int ejeX)
+        {            
+            int[] posicionesY = new int[casillas.GetLength(1)];
+            for (int y = 0; y < casillas.GetLength(1); y++)
+            {                       
+                if(casillas[y,ejeX] == null)
+                {
+                    posicionesY[y] = 1;
+                }
+                else
+                {
+                    posicionesY[y] = 0;
+                }                       
+            }
+            return posicionesY;
         }        
     }
 }
