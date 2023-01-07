@@ -5,34 +5,42 @@
 */
 //-Importaciones:
 using System;
-using ficha;
 
 //-Contenido:
 
-namespace tablero
+namespace Gato_4enLinea
 {
     public class Tablero{
-        private Ficha[,] casillas { get; set;}
+
+        /// <summary>
+        /// Atributos de la clase Tablero
+        /// </summary>
+        private Ficha[,] _casillas;
+
+        /// <summary>
+        /// Constructor de la clase Tablero
+        /// </summary>
+        /// <param name="filas">Filas del tablero</param>
+        /// <param name="columnas">Columnas del tablero</param>        
         public Tablero(int filas, int columnas)
         {
             this.casillas = new Ficha[filas,columnas];
         }  
-        public Ficha[,] getCasillas()
-        {
-            return this.casillas;
-        }
-        public Ficha getFicha(int ejeX, int ejeY)
-        {
-            return this.casillas[ejeX,ejeY];
-        }
 
-        public int getLength(){
-            return this.casillas.Length;
-        }  
-        public void setFicha(Ficha ficha, int ejeX, int ejeY)
+        /// <summary>
+        /// Propiedades de la clase Tablero
+        /// </summary>
+        public Ficha[,] casillas
         {
-            this.casillas[ejeX,ejeY] = ficha;
+            get { return _casillas; }
+            set { _casillas = value; }
         }
+       
+        /// <summary>
+        /// Método para imprimir el tablero con sobrecarga para colocar ficha
+        /// </summary>
+        /// <param name="newFicha">Ficha que se va a colocar en el tablero</param>
+        /// <param name="ejeY">Eje Y donde se va a colocar la ficha</param>
         public void imprimirTablero(Ficha newFicha, int ejeY)
         {
             for (int j = 0; j < this.casillas.GetLength(1); j++)
@@ -65,7 +73,7 @@ namespace tablero
                 Console.Write("|");
                 if(i == ejeY)
                 {
-                    Console.ForegroundColor = newFicha.getColor();
+                    Console.ForegroundColor = newFicha.color;
                     Console.Write(" ◄\n");
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                 }else
@@ -79,6 +87,10 @@ namespace tablero
                 Console.Write("-\n");
             }
         }
+
+        /// <summary>
+        /// Método para imprimir el tablero
+        /// </summary>
         public void imprimirTablero()
         {
             for (int j = 0; j < this.casillas.GetLength(1); j++)
@@ -119,6 +131,10 @@ namespace tablero
             }
         }
 
+        /// <summary>
+        /// Método para obtener las posiciones válidas en el tablero
+        /// </summary>
+        /// <returns>Arreglo con las posiciones válidas</returns>
         public int[] posicionesValidas()
         {
             int[] posicionesX = new int[casillas.GetLength(1)];
@@ -136,6 +152,12 @@ namespace tablero
             }
             return posicionesX;                
         }
+
+        /// <summary>
+        /// Método para obtener las posiciones válidas en el tablero del ejeX
+        /// </summary>
+        /// <param name="ejeX">Eje X donde se va a buscar las posiciones válidas</param>
+        /// <returns>Arreglo con las posiciones válidas</returns>
         public int[] posicionesValidas(int ejeX)
         {            
             int[] posicionesY = new int[casillas.GetLength(1)];

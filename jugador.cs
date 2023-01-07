@@ -4,25 +4,42 @@
 */
 //-Importaciones:
 using System;
-using ficha;
 //-Contenido:
 
-namespace jugador{    
+namespace Gato_4enLinea{    
     public class Jugador{
-        private String nombre { get; set; }
-        private Ficha ficha { get; set; }
+
+        /// <summary>
+        /// Atributos de la clase Jugador
+        /// </summary>        
+        private String _nombre = "";
+        private Ficha _ficha = new Ficha();
+        
+        /// <summary>
+        /// Constructor de la clase Jugador
+        /// </summary>
+        /// <param name="nombre">Nombre del jugador</param>
+        /// <param name="figura">Figura que representa al jugador</param>
+        /// <param name="color">Color de la figura del jugador</param>
+
         public Jugador(String nombre, char figura, ConsoleColor color) 
         {            
             this.nombre = nombre;            
             this.ficha = new Ficha(figura, color);
         }
-        public Ficha getFicha()
+
+        /// <summary>
+        /// Propiedades de la clase Jugador
+        /// </summary>
+        public String nombre
         {
-            return this.ficha;
+            get { return _nombre; }
+            set { _nombre = value; }
         }
-        public String getNombre()
+        public Ficha ficha
         {
-            return this.nombre;
+            get { return _ficha; }
+            set { _ficha = value; }
         }
     }   
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using juego;
-using jugador;
 using menu;
 
 namespace Gato_4enLinea
@@ -49,7 +47,7 @@ namespace Gato_4enLinea
                     turno++;
                     gato.seleccionarColumna(jugador2);
                     turno++;
-                } while (turno < gato.getTablero().getLength());
+                } while (turno < gato.tablero.casillas.Length);
             }
             else if(opcMenu == 1)
             {
@@ -64,7 +62,7 @@ namespace Gato_4enLinea
                     turno++;
                     cuatroEnLinea.seleccionarColumna(jugador2);
                     turno++;
-                } while (turno < cuatroEnLinea.getTablero().getLength());
+                } while (turno < cuatroEnLinea.tablero.casillas.Length);
             }
         }
     }
