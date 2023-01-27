@@ -1,8 +1,4 @@
-/*
-* ---------- Ayuda!! ----------
-*    Se muestra un tablero interactivo que utiliza las teclas de flecha 
-*    para moverte en él y la tecla Enter para seleccionar.
-*/
+
 //-Importaciones:
 using System;
 
@@ -10,10 +6,13 @@ using System;
 
 namespace Gato_4enLinea
 {
+    /// <summary>
+    /// Clase Tablero
+    /// </summary>
     public class Tablero{
 
         /// <summary>
-        /// Atributos de la clase Tablero
+        /// Almacenamiento de las fichas del tablero
         /// </summary>
         private Ficha[,] _casillas;
 
@@ -28,7 +27,7 @@ namespace Gato_4enLinea
         }  
 
         /// <summary>
-        /// Propiedades de la clase Tablero
+        /// Matriz de fichas
         /// </summary>
         public Ficha[,] casillas
         {
@@ -37,11 +36,11 @@ namespace Gato_4enLinea
         }
        
         /// <summary>
-        /// Método para imprimir el tablero con sobrecarga para colocar ficha
+        /// Método para imprimir el tablero donde se muestra la ficha que se va a colocar
         /// </summary>
         /// <param name="newFicha">Ficha que se va a colocar en el tablero</param>
         /// <param name="ejeY">Eje Y donde se va a colocar la ficha</param>
-        public void imprimirTablero(Ficha newFicha, int ejeY)
+        public void imprimir(Ficha newFicha, int ejeY)
         {
             for (int j = 0; j < this.casillas.GetLength(1); j++)
             {
@@ -64,7 +63,7 @@ namespace Gato_4enLinea
                     }
                     else
                     {
-                        casillas[i,j].colocar();
+                        casillas[i,j].imprimir();
                     }
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write(" ");
@@ -91,7 +90,7 @@ namespace Gato_4enLinea
         /// <summary>
         /// Método para imprimir el tablero
         /// </summary>
-        public void imprimirTablero()
+        public void imprimir()
         {
             for (int j = 0; j < this.casillas.GetLength(1); j++)
             {
@@ -114,7 +113,7 @@ namespace Gato_4enLinea
                     }
                     else
                     {
-                        casillas[i,j].colocar();
+                        casillas[i,j].imprimir();
                     }
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write(" ");
@@ -129,50 +128,6 @@ namespace Gato_4enLinea
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write("-\n");
             }
-        }
-
-        /// <summary>
-        /// Método para obtener las posiciones válidas en el tablero
-        /// </summary>
-        /// <returns>Arreglo con las posiciones válidas</returns>
-        public int[] posicionesValidas()
-        {
-            int[] posicionesX = new int[casillas.GetLength(1)];
-            for (int x = 0; x < casillas.GetLength(1); x++)
-            {
-                posicionesX[x] = 0;
-                for (int y = 0; y < casillas.GetLength(0); y++)
-                {
-                    if(casillas[y,x] == null)
-                    {
-                        posicionesX[x] = 1;
-                        break;
-                    }
-                }
-            }
-            return posicionesX;                
-        }
-
-        /// <summary>
-        /// Método para obtener las posiciones válidas en el tablero del ejeX
-        /// </summary>
-        /// <param name="ejeX">Eje X donde se va a buscar las posiciones válidas</param>
-        /// <returns>Arreglo con las posiciones válidas</returns>
-        public int[] posicionesValidas(int ejeX)
-        {            
-            int[] posicionesY = new int[casillas.GetLength(1)];
-            for (int y = 0; y < casillas.GetLength(1); y++)
-            {                       
-                if(casillas[y,ejeX] == null)
-                {
-                    posicionesY[y] = 1;
-                }
-                else
-                {
-                    posicionesY[y] = 0;
-                }                       
-            }
-            return posicionesY;
-        }        
+        }      
     }
 }

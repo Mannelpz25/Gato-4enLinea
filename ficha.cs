@@ -1,30 +1,25 @@
-/* ---------- Ayuda!! ----------
-*    Clase Ficha
-*   Se modela el objeto Ficha con sus métodos para manipulación del mismo
-*/
 //-Importaciones:
 using System;
 //-Contenido:
 namespace Gato_4enLinea{    
+    /// <summary>
+    /// Clase Ficha
+    /// </summary>
     public class Ficha{
         /// <summary>
-        /// Atributos de la clase Ficha
+        /// Almacenamiento del caracter de la ficha
         /// </summary>        
         private char _figura = ' ';
-        private ConsoleColor _color = new ConsoleColor();    
-
         /// <summary>
-        /// Constructor de la clase Ficha vacia
-        /// </summary>
-        public Ficha()
-        {
-        }   
+        /// Almacenamiento del color de la ficha
+        /// </summary>      
+        private ConsoleColor _color = new ConsoleColor();    
 
         /// <summary>
         /// Constructor de la clase Ficha
         /// </summary>
-        /// <param name="figura">Figura que representa al jugador</param>
-        /// <param name="color">Color de la figura del jugador</param>
+        /// <param name="figura">Figura que de la ficha</param>
+        /// <param name="color">Color de la ficha</param>
         public Ficha(char figura, ConsoleColor color)
         {
             this.figura = figura;
@@ -32,22 +27,26 @@ namespace Gato_4enLinea{
         }
 
         /// <summary>
-        /// Método para colocar la ficha en el tablero
+        /// Imprime la ficha
         /// </summary>        
-        public void colocar()
+        public void imprimir()
         {
             Console.ForegroundColor = this.color;
             Console.Write(figura);
         }
 
         /// <summary>
-        /// Propiedades de la clase Ficha
+        /// Carácter de la ficha
         /// </summary>
         public char figura
         {
             get { return _figura; }
             set { _figura = value; }
         }
+
+        /// <summary>
+        /// Color de la ficha
+        /// </summary>
         public ConsoleColor color
         {
             get { return _color; }

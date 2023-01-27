@@ -5,6 +5,10 @@ namespace Gato_4enLinea
 {
     class Program
     {
+
+        ///<summary>
+        /// Método principal del programa
+        ///</summary>
         static void Main(string[] args)
         {
             string titulo = "- - - - - Bienvenido al juego del gato y 4 en linea - - - - -";
@@ -43,11 +47,9 @@ namespace Gato_4enLinea
                 Gato gato = new Gato(jugador1, jugador2);
                 do
                 {
-                    gato.seleccionarColumna(jugador1);
-                    turno++;
-                    gato.seleccionarColumna(jugador2);
-                    turno++;
-                } while (turno < gato.tablero.casillas.Length);
+                    turno += gato.seleccionarColumna(jugador1);
+                    turno += gato.seleccionarColumna(jugador2);
+                } while (!gato.reglas[3].seCumple(turno));
             }
             else if(opcMenu == 1)
             {
@@ -58,11 +60,9 @@ namespace Gato_4enLinea
                 CuatroEnLinea cuatroEnLinea = new CuatroEnLinea(jugador1, jugador2);
                 do
                 {
-                    cuatroEnLinea.seleccionarColumna(jugador1);
-                    turno++;
-                    cuatroEnLinea.seleccionarColumna(jugador2);
-                    turno++;
-                } while (turno < cuatroEnLinea.tablero.casillas.Length);
+                    turno += cuatroEnLinea.seleccionarColumna(jugador1);
+                    turno += cuatroEnLinea.seleccionarColumna(jugador2);
+                } while (!cuatroEnLinea.reglas[3].seCumple(turno));
             }
         }
     }

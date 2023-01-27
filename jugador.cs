@@ -1,19 +1,21 @@
-/* ---------- Ayuda!! ----------
-*    Clase Jugador
-*   Se modela el objeto Jugador con sus métodos para manipulación del mismo
-*/
 //-Importaciones:
 using System;
 //-Contenido:
 
 namespace Gato_4enLinea{    
+    /// <summary>
+    /// Clase Jugador
+    /// </summary>
     public class Jugador{
 
         /// <summary>
-        /// Atributos de la clase Jugador
+        /// Almacenamiento del nombre del jugador
         /// </summary>        
         private String _nombre = "";
-        private Ficha _ficha = new Ficha();
+        /// <summary>
+        /// Almacenamiento de la ficha del jugador
+        /// </summary>     
+        private Ficha _ficha;
         
         /// <summary>
         /// Constructor de la clase Jugador
@@ -29,13 +31,16 @@ namespace Gato_4enLinea{
         }
 
         /// <summary>
-        /// Propiedades de la clase Jugador
+        /// Nombre del jugador
         /// </summary>
         public String nombre
         {
             get { return _nombre; }
             set { _nombre = value; }
         }
+        /// <summary>
+        /// Ficha del jugador
+        /// </summary>
         public Ficha ficha
         {
             get { return _ficha; }
