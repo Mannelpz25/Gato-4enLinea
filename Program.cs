@@ -3,6 +3,9 @@ using menu;
 
 namespace Gato_4enLinea
 {
+    ///<summary>
+    /// Clase Program
+    ///</summary>
     class Program
     {
 
@@ -49,7 +52,7 @@ namespace Gato_4enLinea
                 {
                     turno += gato.seleccionarColumna(jugador1);
                     turno += gato.seleccionarColumna(jugador2);
-                } while (!gato.reglas[3].seCumple(turno));
+                } while (turno != 9);
             }
             else if(opcMenu == 1)
             {
@@ -61,8 +64,9 @@ namespace Gato_4enLinea
                 do
                 {
                     turno += cuatroEnLinea.seleccionarColumna(jugador1);
+
                     turno += cuatroEnLinea.seleccionarColumna(jugador2);
-                } while (!cuatroEnLinea.reglas[3].seCumple(turno));
+                } while (turno != 42);
             }
         }
     }

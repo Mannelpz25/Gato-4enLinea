@@ -21,8 +21,8 @@ namespace Gato_4enLinea{
         /// Constructor de la clase Jugador
         /// </summary>
         /// <param name="nombre">Nombre del jugador</param>
-        /// <param name="figura">Figura que representa al jugador</param>
-        /// <param name="color">Color de la figura del jugador</param>
+        /// <param name="figura">Figura de la ficha</param>
+        /// <param name="color">Color de la ficha</param>
 
         public Jugador(String nombre, char figura, ConsoleColor color) 
         {            

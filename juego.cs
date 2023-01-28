@@ -22,9 +22,9 @@ namespace Gato_4enLinea{
         private Jugador _jugador2;
 
         /// <summary>
-        /// Almacenamiento de las reglas
+        /// Almacenamiento de la regla ganador
         /// </summary>
-        private Regla[] _reglas;
+        private ReglaGanador _reglaGanador;
 
 
         /// <summary>
@@ -64,134 +64,18 @@ namespace Gato_4enLinea{
         {
             get { return _jugador2; }
             set { _jugador2 = value; }
-        } 
-        /// <summary>
-        /// Reglas del juego
-        /// </summary>     
-        public Regla[] reglas
-        {
-            get { return _reglas; }
-            set { _reglas = value; }
         }
 
         /// <summary>
-        /// verifica si hay un ganador con las reglas del juego
+        /// Regla ganador
         /// </summary>
-        public void verificarGanador(){            
-            //Verificar horizontal
-            for(int i = 0; i < tablero.casillas.GetLength(0); i++){
-                for(int j = 0; j < tablero.casillas.GetLength(1); j++){
-                    if(tablero.casillas[i, j] != null){                        
-                        if(j + reglas[0].valor <= tablero.casillas.GetLength(1)){
-                            int contador = 0;
-                            for(int k = j; k < j + reglas[0].valor; k++){
-                                if(tablero.casillas[i, j] == tablero.casillas[i, k]){
-                                    contador++;
-                                }
-                            }
-                            if(reglas[0].seCumple(contador)){
-                                Console.Clear();
-                                switch(tablero.casillas[i, j].figura){
-                                    case 'X':
-                                        Console.WriteLine("Ganador: {0}\n", jugador1.nombre);
-                                        break;
-                                    case 'O':
-                                        Console.WriteLine("Ganador: {0}\n", jugador2.nombre);
-                                        break;
-                                }
-                                tablero.imprimir();
-                                Console.WriteLine("Fin del juego....");
-                                Console.ReadKey();
-                                Environment.Exit(0);
-                            }
-                        }
-                    }
-                }
-            }
-            //Verificar vertical
-            for(int i = 0; i < tablero.casillas.GetLength(0); i++){
-                for(int j = 0; j < tablero.casillas.GetLength(1); j++){
-                    if(tablero.casillas[i, j] != null){                        
-                        if(i + reglas[0].valor <= tablero.casillas.GetLength(0)){
-                            int contador = 0;
-                            for(int k = i; k < i + reglas[0].valor; k++){
-                                if(tablero.casillas[i, j] == tablero.casillas[k, j]){
-                                    contador++;
-                                }
-                            }
-                            if(reglas[0].seCumple(contador)){
-                                Console.Clear();
-                                switch(tablero.casillas[i, j].figura){
-                                    case 'X':
-                                        Console.WriteLine("Ganador: {0}\n", jugador1.nombre);
-                                        break;
-                                    case 'O':
-                                        Console.WriteLine("Ganador: {0}\n", jugador2.nombre);
-                                        break;
-                                }
-                                tablero.imprimir();
-                                Console.WriteLine("Fin del juego....");
-                                Console.ReadKey();
-                                Environment.Exit(0);
-                            }
-                        }
-                    }
-                }
-            }
-            //Verificar diagonal
-            for(int i = 0; i < tablero.casillas.GetLength(0); i++){
-                for(int j = 0; j < tablero.casillas.GetLength(1); j++){
-                    if(tablero.casillas[i, j] != null){    
-                        if(i + reglas[0].valor <= tablero.casillas.GetLength(0) && j + reglas[0].valor <= tablero.casillas.GetLength(1)){
-                            int contador = 0;
-                            for(int k = 0; k < reglas[0].valor; k++){
-                                if(tablero.casillas[i, j] == tablero.casillas[i + k, j + k]){
-                                    contador++;
-                                }
-                            }
-                            if(reglas[0].seCumple(contador)){
-                                Console.Clear();
-                                switch(tablero.casillas[i, j].figura){
-                                    case 'X':
-                                        Console.WriteLine("Ganador: {0}\n", jugador1.nombre);
-                                        break;
-                                    case 'O':
-                                        Console.WriteLine("Ganador: {0}\n", jugador2.nombre);
-                                        break;
-                                }
-                                tablero.imprimir();
-                                Console.WriteLine("Fin del juego....");
-                                Console.ReadKey();
-                                Environment.Exit(0);
-                            }
-                        }
-                        if((i + reglas[0].valor) <= tablero.casillas.GetLength(0) && (j - reglas[0].valor + 1) >= 0){
-                            int contador = 0;
-                            for(int k = 0; k < reglas[0].valor; k++){
-                                if(tablero.casillas[i, j] == tablero.casillas[i + k, j - k]){       
-                                    contador++;
-                                }
-                            }
-                            if(reglas[0].seCumple(contador)){
-                                Console.Clear();
-                                switch(tablero.casillas[i, j].figura){
-                                    case 'X':
-                                        Console.WriteLine("Ganador: {0}\n", jugador1.nombre);
-                                        break;
-                                    case 'O':
-                                        Console.WriteLine("Ganador: {0}\n", jugador2.nombre);
-                                        break;
-                                }
-                                tablero.imprimir();
-                                Console.WriteLine("Fin del juego....");
-                                Console.ReadKey();
-                                Environment.Exit(0);
-                            }
-                        }
-                    }
-                }
-            }
+        public ReglaGanador reglaGanador
+        {
+            get { return _reglaGanador; }
+            set { _reglaGanador = value; }
         }
+
+        
         /// <summary>
         /// Obtiene las posiciones válidas en el tablero
         /// </summary>
@@ -204,7 +88,7 @@ namespace Gato_4enLinea{
                 posicionesX[x] = 0;
                 for (int y = 0; y < tablero.casillas.GetLength(0); y++)
                 {
-                    if(!reglas[2].seCumple(tablero.casillas[y,x] == null ? 0 : 1))
+                    if(tablero.casillas[y,x] == null)
                     {
                         posicionesX[x] = 1;
                         break;
@@ -226,7 +110,7 @@ namespace Gato_4enLinea{
             int[] posicionesY = new int[tablero.casillas.GetLength(1)];
             for (int y = 0; y < tablero.casillas.GetLength(1); y++)
             {                       
-                if(!reglas[2].seCumple(tablero.casillas[y,ejeX] == null ? 0 : 1 ))
+                if(tablero.casillas[y,ejeX] == null)
                 {
                     posicionesY[y] = 1;
                 }
@@ -241,16 +125,7 @@ namespace Gato_4enLinea{
     }
     public class Gato:Juego
     {
-        /// <summary>
-        /// Almacenamiento de las reglas
-        /// </summary>
-        private Regla[] _reglas = new Regla[4]
-        {
-            new Regla(3, "Si hay 3 fichas iguales en linea gana el jugador"),
-            new Regla(0, "Si se llena el tablero sin ganador se declara empate"),
-            new Regla(1, "Si la casilla ya esta ocupada no se puede colocar la ficha"),
-            new Regla(9, "El tamaño del tablero es 3x3")
-        };
+       
         /// <summary>
         /// Constructor de la clase Gato
         /// </summary>
@@ -258,7 +133,7 @@ namespace Gato_4enLinea{
         /// <param name="jugador2">Jugador 2</param>        
         public Gato(Jugador jugador1, Jugador jugador2):base(3,3,jugador1,jugador2)
         {
-            this.reglas = _reglas;
+            this.reglaGanador = new ReglaGanador(3);
         }
 
         
@@ -269,16 +144,15 @@ namespace Gato_4enLinea{
         public int seleccionarColumna(Jugador jugador){            
             ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
             int ejeX = -1; // Variable para almacenar la posicion en X
-            verificarGanador();
             int[] posicionesValidas = getPosicionesValidas();
-            if(reglas[1].seCumple(posicionesValidas.Sum())){
-                Console.Clear();
-                Console.WriteLine("Empate\n");
-                this.tablero.imprimir();
-                Console.WriteLine("Fin del juego....");
-                Console.ReadKey();
-                return 0;
-            }
+            // if(reglas[1].seCumple(posicionesValidas.Sum())){
+            //     Console.Clear();
+            //     Console.WriteLine("Empate\n");
+            //     this.tablero.imprimir(-1,-1);
+            //     Console.WriteLine("Fin del juego....");
+            //     Console.ReadKey();
+            //     return 0;
+            // }
             do{
                 key = 0;
                 Console.Clear(); // Limpia la consola
@@ -288,27 +162,13 @@ namespace Gato_4enLinea{
                 Console.WriteLine("Utilize las flechas para moverse y pulse Enter para seleccionar... \n");
                 if(ejeX == -1){
                     for(int x = 0; x < posicionesValidas.Length; x++){
-                        if(posicionesValidas[x] == 1){
-                            Console.ForegroundColor = jugador.ficha.color;
-                            Console.Write("  ▼\n");
+                        if(posicionesValidas[x] == 1){                          
                             ejeX = x;
                             break;
-                        }else{
-                            Console.Write("    ");
                         }
                     }
-                }else{
-                    for(int x = 0; x < posicionesValidas.Length; x++){                        
-                        if(x == ejeX){
-                            Console.ForegroundColor = jugador.ficha.color;
-                            Console.Write("  ▼\n");  
-                            break;
-                        }else{
-                            Console.Write("    ");
-                        }  
-                    }
                 }
-                this.tablero.imprimir();
+                this.tablero.imprimir(ejeX,-1); 
                 key = Console.ReadKey().Key;     
                 // Se evalua si que flecha se presiono
                 if(key == ConsoleKey.LeftArrow){
@@ -352,15 +212,6 @@ namespace Gato_4enLinea{
                 Console.WriteLine("Jugador: {0}", jugador.nombre);
                 Console.ForegroundColor = ConsoleColor.DarkCyan; // Cambia el color del texto
                 Console.WriteLine("Utilize las flechas para moverse y pulse Enter para seleccionar... \n"); 
-                for(int x = 0; x <= ejeX; x++){
-                    if(ejeX==x){                         
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.Write("  ▼\n");
-                        break;
-                    }else{
-                        Console.Write("    ");
-                    }
-                }              
                 if(ejeY == -1){
                     for(int y = 0; y < posicionesValidas.Length; y++){
                         if(posicionesValidas[y] == 1){                            
@@ -369,7 +220,7 @@ namespace Gato_4enLinea{
                         }
                     }
                 }  
-                this.tablero.imprimir(jugador.ficha, ejeY);
+                this.tablero.imprimir(ejeX, ejeY);
                 key = Console.ReadKey().Key;     
                 // Se evalua si que flecha se presiono
                 if(key == ConsoleKey.UpArrow){
@@ -394,6 +245,7 @@ namespace Gato_4enLinea{
                 } 
             }while(key != ConsoleKey.Enter);
             this.tablero.casillas[ejeY, ejeX] = jugador.ficha ;
+            reglaGanador.evaluar(this.tablero, jugador.ficha);
             Console.ForegroundColor = ConsoleColor.Gray; 
             return 1;// Cambia el color del texto 
         }
@@ -403,17 +255,10 @@ namespace Gato_4enLinea{
     {
         /// <summary>
         /// Almacenamiento de las reglas
-        /// </summary>
-        private Regla[] _reglas = new Regla[4]
-        {
-            new Regla(4, "Si hay 4 fichas iguales en linea gana el jugador"),
-            new Regla(0, "Si se llena el tablero sin ganador se declara empate"),
-            new Regla(1, "Si la casilla ya esta ocupada no se puede colocar la ficha"),
-            new Regla(42, "El tamaño del tablero es 6x7")
-        };
+        /// </summary>        
         public CuatroEnLinea(Jugador jugador1, Jugador jugador2):base(6, 7, jugador1, jugador2)
         {
-            this.reglas = _reglas;
+           this.reglaGanador = new ReglaGanador(4);
         }
         
         /// <summary>
@@ -423,16 +268,15 @@ namespace Gato_4enLinea{
         public int seleccionarColumna(Jugador jugador){            
             ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
             int ejeX = -1; // Variable para almacenar la posicion en X
-            verificarGanador();
             int[] posicionesValidas = getPosicionesValidas();
-            if(reglas[1].seCumple(posicionesValidas.Sum())){
-                Console.Clear();
-                Console.WriteLine("Empate\n");
-                this.tablero.imprimir();
-                Console.WriteLine("Fin del juego....");
-                Console.ReadKey();
-                return 0;
-            }
+            // if(reglas[1].seCumple(posicionesValidas.Sum())){
+            //     Console.Clear();
+            //     Console.WriteLine("Empate\n");
+            //     this.tablero.imprimir();
+            //     Console.WriteLine("Fin del juego....");
+            //     Console.ReadKey();
+            //     return 0;
+            // }
             do{
                 key = 0;
                 Console.Clear(); // Limpia la consola
@@ -462,7 +306,7 @@ namespace Gato_4enLinea{
                         }  
                     }
                 }
-                this.tablero.imprimir();
+                // this.tablero.imprimir();
                 key = Console.ReadKey().Key;     
                 // Se evalua si que flecha se presiono
                 if(key == ConsoleKey.LeftArrow){
