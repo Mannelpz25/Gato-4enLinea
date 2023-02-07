@@ -4,7 +4,7 @@ using System;
 
 namespace Gato_4enLinea{    
     /// <summary>
-    /// Clase Jugador
+    /// Clase que modela un jugador 
     /// </summary>
     public class Jugador{
 

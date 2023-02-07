@@ -1,17 +1,21 @@
 //-Importaciones:
 using System;
-using System.Linq;
 //-Contenido:
 namespace Gato_4enLinea{    
     /// <summary>
-    /// Clase Juego
+    /// Clase que modela un juego, contiene los jugadores, el tablero y las reglas
     /// </summary>
-    public class Juego{
-
+    public abstract class Juego{
         /// <summary>
         /// Almacenamiento del tablero
         /// </summary>
         private Tablero _tablero;
+
+        /// <summary>
+        /// Almacenamiento del jugador ganador
+        /// </summary>
+        private Jugador _jugadorGanador;
+
         /// <summary>
         /// Almacenamiento del jugador 1
         /// </summary>
@@ -22,24 +26,9 @@ namespace Gato_4enLinea{
         private Jugador _jugador2;
 
         /// <summary>
-        /// Almacenamiento de la regla ganador
+        /// Almacenamiento de las reglas
         /// </summary>
-        private ReglaGanador _reglaGanador;
-
-
-        /// <summary>
-        /// Constructor de la clase Juego
-        /// </summary>
-        /// <param name="filas">Filas del tablero</param>
-        /// <param name="columnas">Columnas del tablero</param>
-        /// <param name="jugador1">Jugador 1</param>
-        /// <param name="jugador2">Jugador 2</param>
-        public Juego(int filas, int columnas, Jugador jugador1, Jugador jugador2)
-        {
-            this.tablero = new Tablero(filas, columnas);
-            this.jugador1 = jugador1;
-            this.jugador2 = jugador2;
-        }
+        private ReglaAbstract [] _reglas;
 
         /// <summary>
         /// Tablero del juego
@@ -49,6 +38,16 @@ namespace Gato_4enLinea{
             get { return _tablero; }
             set { _tablero = value; }
         }
+
+        /// <summary>
+        /// Jugador ganador
+        /// </summary>
+        public Jugador jugadorGanador
+        {
+            get { return _jugadorGanador; }
+            set { _jugadorGanador = value; }
+        }
+
         /// <summary>
         /// Jugador 1
         /// </summary>
@@ -57,6 +56,7 @@ namespace Gato_4enLinea{
             get { return _jugador1; }
             set { _jugador1 = value; }
         }
+
         /// <summary>
         /// Jugador 2
         /// </summary>
@@ -67,76 +67,130 @@ namespace Gato_4enLinea{
         }
 
         /// <summary>
-        /// Regla ganador
+        /// Reglas del juego
         /// </summary>
-        public ReglaGanador reglaGanador
+        public ReglaAbstract[] reglas
         {
-            get { return _reglaGanador; }
-            set { _reglaGanador = value; }
+            get { return _reglas; }
+            set { _reglas = value; }
         }
 
-        
         /// <summary>
-        /// Obtiene las posiciones válidas en el tablero
+        /// Enumerador de resultados
         /// </summary>
-        /// <returns>Arreglo con las posiciones válidas</returns>
-        public int[] getPosicionesValidas()
+        public enum results
         {
-            int[] posicionesX = new int[tablero.casillas.GetLength(1)];
-            for (int x = 0; x < tablero.casillas.GetLength(1); x++)
-            {
-                posicionesX[x] = 0;
-                for (int y = 0; y < tablero.casillas.GetLength(0); y++)
-                {
-                    if(tablero.casillas[y,x] == null)
-                    {
-                        posicionesX[x] = 1;
-                        break;
-                    }
-                }
-            }            
-            return posicionesX;                
+            WIN,
+            DRAW,
         }
 
-          
+        /// <summary>
+        /// Método abstacto para inicializar el juego
+        /// </summary>
+        public abstract void init();
 
         /// <summary>
-        /// Método para obtener las posiciones válidas en el tablero del ejeX
+        /// Método abstacto para comenzar el juego
         /// </summary>
-        /// <param name="ejeX">Eje X donde se va a buscar las posiciones válidas</param>
-        /// <returns>Arreglo con las posiciones válidas</returns>
-        public int[] getPosicionesValidasX(int ejeX)
-        {            
-            int[] posicionesY = new int[tablero.casillas.GetLength(1)];
-            for (int y = 0; y < tablero.casillas.GetLength(1); y++)
-            {                       
-                if(tablero.casillas[y,ejeX] == null)
-                {
-                    posicionesY[y] = 1;
-                }
-                else
-                {
-                    posicionesY[y] = 0;
-                }                       
-            }
-            return posicionesY;
-        }        
-        
-    }
-    public class Gato:Juego
+        public abstract void run();
+
+        /// <summary>
+        /// Método abstacto para resultado el juego
+        /// </summary>
+        public abstract void result();   
+    }    
+
+    /// <summary>
+    /// Clase que modela un juego de gato
+    /// </summary>
+    public class JuegoGato : Juego
     {
-       
         /// <summary>
-        /// Constructor de la clase Gato
+        /// Método para inicializar el juego
         /// </summary>
-        /// <param name="jugador1">Jugador 1</param>
-        /// <param name="jugador2">Jugador 2</param>        
-        public Gato(Jugador jugador1, Jugador jugador2):base(3,3,jugador1,jugador2)
+        public override void init()
         {
-            this.reglaGanador = new ReglaGanador(3);
+            // Inicializar tablero
+            tablero = new Tablero(3, 3);
+
+            // Inicializar jugadores
+            String nombreJugador1;
+            String nombreJugador2;
+            Console.ForegroundColor = ConsoleColor.DarkBlue; // Cambia el color del texto
+            Console.WriteLine("Ingrese el nombre del jugador 1:");
+            Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto
+            nombreJugador1 = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.DarkBlue; // Cambia el color del texto
+            Console.WriteLine("Ingrese el nombre del jugador 2:");
+            Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto
+            nombreJugador2 = Console.ReadLine();
+
+            jugador1 = new Jugador(nombreJugador1, 'X', ConsoleColor.Red);
+            jugador2 = new Jugador(nombreJugador2, 'O', ConsoleColor.Blue);
+
+            // Inicializar reglas
+            reglas = new ReglaAbstract[4];
+            reglas[0] = new ReglaHorizontal(3);
+            reglas[1] = new ReglaVertical(3);
+            reglas[2] = new ReglaDiagonal(3);
+            reglas[3] = new ReglaTableroLleno();
         }
 
-        
+        /// <summary>
+        /// Método para comenzar el juego
+        /// </summary>
+        public override void run()
+        {
+            int turno = 0;
+            do{
+                turno += seleccionarColumna(jugador1);
+                if(verificarReglas(jugador1))
+                    break;
+                turno += seleccionarColumna(jugador2);
+                if(verificarReglas(jugador2))
+                    break;
+            } while (turno != 9);
+        }
+
+        /// <summary>
+        /// Método para resultado el juego
+        /// </summary>
+        public override void result()
+        {
+            if (jugadorGanador == null)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue; // Cambia el color del texto
+                Console.WriteLine(results.DRAW.ToString());
+                Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue; // Cambia el color del texto
+                Console.WriteLine("Ganador: " + jugadorGanador.nombre);
+                Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto
+            }
+        }
+
+        /// <summary>
+        /// Método para verificar las reglas del juego
+        /// </summary>
+        public bool verificarReglas(Jugador jugador)
+        {
+            foreach (ReglaAbstract regla in reglas)
+            {
+                if (regla.evaluar(tablero, jugador.ficha))
+                {
+                    if(regla is ReglaTableroLleno){
+                        jugadorGanador = null;
+                        return true;
+                    }
+                    jugadorGanador = jugador;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Método para seleccionar la columna en la que se desea colocar la ficha
         /// </summary>
@@ -144,15 +198,7 @@ namespace Gato_4enLinea{
         public int seleccionarColumna(Jugador jugador){            
             ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
             int ejeX = -1; // Variable para almacenar la posicion en X
-            int[] posicionesValidas = getPosicionesValidas();
-            // if(reglas[1].seCumple(posicionesValidas.Sum())){
-            //     Console.Clear();
-            //     Console.WriteLine("Empate\n");
-            //     this.tablero.imprimir(-1,-1);
-            //     Console.WriteLine("Fin del juego....");
-            //     Console.ReadKey();
-            //     return 0;
-            // }
+            int[] posicionesValidas = tablero.getPosicionesValidasX();
             do{
                 key = 0;
                 Console.Clear(); // Limpia la consola
@@ -168,7 +214,9 @@ namespace Gato_4enLinea{
                         }
                     }
                 }
-                this.tablero.imprimir(ejeX,-1); 
+                tablero.marcadores[0] = ejeX;
+                tablero.marcadores[1] = -1;
+                this.tablero.imprimir(); 
                 key = Console.ReadKey().Key;     
                 // Se evalua si que flecha se presiono
                 if(key == ConsoleKey.LeftArrow){
@@ -193,18 +241,18 @@ namespace Gato_4enLinea{
                 } 
             }while(key != ConsoleKey.Enter);
             Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto 
-            return seleccionarFila(ejeX, jugador);
-        }        
+            return seleccionarFila(jugador);
+        } 
 
-        /// <summary>
+         /// <summary>
         /// Método para seleccionar la fila en la que se desea colocar la ficha
         /// </summary>
         /// <param name="ejeX">Posicion en X</param>
         /// <param name="jugador">Jugador que desea colocar la ficha</param>
-        public int seleccionarFila(int ejeX, Jugador jugador){
+        public int seleccionarFila(Jugador jugador){
             ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
             int ejeY = -1; // Variable para almacenar la posicion en X
-            int[] posicionesValidas = getPosicionesValidasX(ejeX);
+            int[] posicionesValidas = tablero.getPosicionesValidasY();
             do{
                 key = 0;
                 Console.Clear(); // Limpia la consola
@@ -220,7 +268,8 @@ namespace Gato_4enLinea{
                         }
                     }
                 }  
-                this.tablero.imprimir(ejeX, ejeY);
+                tablero.marcadores[1] = ejeY;
+                this.tablero.imprimir();
                 key = Console.ReadKey().Key;     
                 // Se evalua si que flecha se presiono
                 if(key == ConsoleKey.UpArrow){
@@ -244,111 +293,9 @@ namespace Gato_4enLinea{
                     } 
                 } 
             }while(key != ConsoleKey.Enter);
-            this.tablero.casillas[ejeY, ejeX] = jugador.ficha ;
-            reglaGanador.evaluar(this.tablero, jugador.ficha);
-            Console.ForegroundColor = ConsoleColor.Gray; 
+            this.tablero.casillas[tablero.marcadores[1], tablero.marcadores[0]] = jugador.ficha ;
             return 1;// Cambia el color del texto 
-        }
-    }
-
-    public class CuatroEnLinea:Juego
-    {
-        /// <summary>
-        /// Almacenamiento de las reglas
-        /// </summary>        
-        public CuatroEnLinea(Jugador jugador1, Jugador jugador2):base(6, 7, jugador1, jugador2)
-        {
-           this.reglaGanador = new ReglaGanador(4);
-        }
-        
-        /// <summary>
-        /// Método para seleccionar la columna en la que se desea colocar la ficha
-        /// </summary>
-        /// <param name="jugador">Jugador que desea colocar la ficha</param>
-        public int seleccionarColumna(Jugador jugador){            
-            ConsoleKey key = new ConsoleKey(); // Variable para almacenar la tecla pulsada
-            int ejeX = -1; // Variable para almacenar la posicion en X
-            int[] posicionesValidas = getPosicionesValidas();
-            // if(reglas[1].seCumple(posicionesValidas.Sum())){
-            //     Console.Clear();
-            //     Console.WriteLine("Empate\n");
-            //     this.tablero.imprimir();
-            //     Console.WriteLine("Fin del juego....");
-            //     Console.ReadKey();
-            //     return 0;
-            // }
-            do{
-                key = 0;
-                Console.Clear(); // Limpia la consola
-                Console.ForegroundColor = ConsoleColor.DarkYellow; // Cambia el color del texto
-                Console.WriteLine("Jugador: {0}", jugador.nombre);
-                Console.ForegroundColor = ConsoleColor.DarkCyan; // Cambia el color del texto
-                Console.WriteLine("Utilize las flechas para moverse y pulse Enter para seleccionar... \n");
-                if(ejeX == -1){
-                    for(int x = 0; x < posicionesValidas.Length; x++){
-                        if(posicionesValidas[x] == 1){
-                            Console.ForegroundColor = jugador.ficha.color;
-                            Console.Write("  ▼\n");
-                            ejeX = x;
-                            break;
-                        }else{
-                            Console.Write("    ");
-                        }
-                    }
-                }else{
-                    for(int x = 0; x < posicionesValidas.Length; x++){                        
-                        if(x == ejeX){
-                            Console.ForegroundColor = jugador.ficha.color;
-                            Console.Write("  ▼\n");  
-                            break;
-                        }else{
-                            Console.Write("    ");
-                        }  
-                    }
-                }
-                // this.tablero.imprimir();
-                key = Console.ReadKey().Key;     
-                // Se evalua si que flecha se presiono
-                if(key == ConsoleKey.LeftArrow){
-                    if(ejeX > 0){
-                        for(int x = ejeX-1; x >= 0; x--){
-                            if(posicionesValidas[x] == 1){
-                                ejeX = x;
-                                break;
-                            }
-                        }
-                                                
-                    }                    
-                } else if(key == ConsoleKey.RightArrow){
-                    if(ejeX < posicionesValidas.Length){
-                        for(int x = ejeX+1; x < posicionesValidas.Length; x++){
-                            if(posicionesValidas[x] == 1){
-                                ejeX = x;
-                                break;
-                            }
-                        }
-                    } 
-                } 
-            }while(key != ConsoleKey.Enter);
-            Console.ForegroundColor = ConsoleColor.Gray; // Cambia el color del texto 
-            return dejarCaerFicha(ejeX, jugador);
-        }     
-
-        ///<summary>
-        /// Método para dejar caer la ficha en la columna seleccionada
-        ///</summary>
-        ///<param name="ejeX">Posicion en X</param>
-        ///<param name="jugador">Jugador que desea colocar la ficha</param>
-        public int dejarCaerFicha(int ejeX, Jugador jugador){
-            for(int y = this.tablero.casillas.GetLength(0)-1; y >= 0; y--){
-                if(this.tablero.casillas[y, ejeX] == null){
-                    this.tablero.casillas[y, ejeX] = jugador.ficha;
-                    return 1;
-                }
-            }
-            return 0;
-        }
-        
-    }    
+        }       
+    }          
    
 }

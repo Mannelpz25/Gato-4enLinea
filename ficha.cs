@@ -3,7 +3,7 @@ using System;
 //-Contenido:
 namespace Gato_4enLinea{    
     /// <summary>
-    /// Clase Ficha
+    /// Clase que modela una ficha del juego Gato / 4 en Línea
     /// </summary>
     public class Ficha{
         /// <summary>
@@ -13,7 +13,7 @@ namespace Gato_4enLinea{
         /// <summary>
         /// Almacenamiento del color de la ficha
         /// </summary>      
-        private ConsoleColor _color = new ConsoleColor();    
+        private ConsoleColor _color = new ConsoleColor();            
 
         /// <summary>
         /// Constructor de la clase Ficha
@@ -52,6 +52,8 @@ namespace Gato_4enLinea{
             get { return _color; }
             set { _color = value; }
         }
+       
+        
     }
    
 }

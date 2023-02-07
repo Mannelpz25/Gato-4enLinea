@@ -7,7 +7,7 @@ using System;
 namespace Gato_4enLinea
 {
     /// <summary>
-    /// Clase Tablero
+    /// Clase que representa el tablero del juego
     /// </summary>
     public class Tablero{
 
@@ -52,19 +52,15 @@ namespace Gato_4enLinea
 
        
         /// <summary>
-        /// Método para imprimir el tablero donde se muestra la ficha que se va a colocar
-        /// </summary>
-        /// <param name="marcadorX">Marcador de la fila</param>
-        /// <param name="marcadorY">Marcador de la columna</param>        
-        public void imprimir(int marcadorX, int marcadorY)
+        /// Método para imprimir el tablero
+        /// </summary>       
+        public void imprimir()
         {
-            marcadores[0] = marcadorX;
-            marcadores[1] = marcadorY;
             for(int x = 0; x < this.casillas.GetLength(1); x++){
-                if (x == marcadorX)
+                if (x == marcadores[0])
                 {
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write("  ▼\n");
+                    Console.Write("  ▼");
                     break;
                 }
                 else
@@ -72,6 +68,7 @@ namespace Gato_4enLinea
                     Console.Write("    ");
                 }
             }
+            Console.Write("\n");
             for (int j = 0; j < this.casillas.GetLength(1); j++)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -100,7 +97,7 @@ namespace Gato_4enLinea
 
                 }
                 Console.Write("|");
-                if(i == marcadorY)
+                if(i == marcadores[1])
                 {
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.Write(" ◄\n");
@@ -115,6 +112,51 @@ namespace Gato_4enLinea
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write("-\n");
             }
-        }        
+        }
+         /// <summary>
+        /// Obtiene las posiciones válidas en el tablero del eje X
+        /// </summary>
+        /// <returns>Arreglo con las posiciones válidas</returns>
+        public int[] getPosicionesValidasX()
+        {
+            int[] posicionesX = new int[casillas.GetLength(1)];
+            for (int x = 0; x < casillas.GetLength(1); x++)
+            {
+                posicionesX[x] = 0;
+                for (int y = 0; y < casillas.GetLength(0); y++)
+                {
+                    if (casillas[y, x] == null)
+                    {
+                        posicionesX[x] = 1;
+                        break;
+                    }
+                }
+            }            
+            return posicionesX;                
+        }
+
+          
+
+        /// <summary>
+        /// Método para obtener las posiciones válidas en el tablero del eje Y
+        /// </summary>
+        /// <returns>Arreglo con las posiciones válidas</returns>
+        public int[] getPosicionesValidasY()
+        {            
+            int[] posicionesY = new int[casillas.GetLength(1)];
+            for (int y = 0; y < casillas.GetLength(1); y++)
+            {                       
+                if(casillas[y,marcadores[0]] == null)
+                {
+                    posicionesY[y] = 1;
+                }
+                else
+                {
+                    posicionesY[y] = 0;
+                }                       
+            }
+            return posicionesY;
+        }              
+          
     }
 }
